@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:push_notification_with_firebase/firebase_options.dart';
 import 'package:push_notification_with_firebase/service/firebase_notification_service.dart';
 import 'package:push_notification_with_firebase/ui/home_screen.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +14,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform
   );
   await FirebaseNotificationService.instance.initialize();
+
+  // Initialize local notifications
+  const AndroidInitializationSettings initializationSettingsAndroid =
+  AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings =
+  InitializationSettings(android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const MyApp());
 }
 
