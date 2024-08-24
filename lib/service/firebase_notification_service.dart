@@ -1,6 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import '../main.dart';
 
 class FirebaseNotificationService{
@@ -67,6 +66,16 @@ class FirebaseNotificationService{
     // terminated state
     FirebaseMessaging.onBackgroundMessage(doNothing);
 
+    // get token
+    String? token = await getToken();
+    print(token);
+
+  }
+
+  // For use instant notification get(Locally)
+  Future<String?> getToken() async{
+    String? token = await _firebaseMessaging.getToken();
+    return token;
   }
 }
 
